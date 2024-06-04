@@ -5,7 +5,7 @@ import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUti
 
 
 export default function Spline({ ...props }) {
-//   const { nodes, materials } = useSpline('https://my.spline.design/cubic-d687c66d1b8a2ce319751cb0eddb67cf/')
+  const { nodes, materials } = useSpline('https://my.spline.design/cubic-d687c66d1b8a2ce319751cb0eddb67cf/')
   return (
     <>
       <color attach="background" args={['#000000']} />
