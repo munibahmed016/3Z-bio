@@ -90,9 +90,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       <section>
-      <div className="">
         <Footer/>
-        </div>
       </section>
     </main>
   );
