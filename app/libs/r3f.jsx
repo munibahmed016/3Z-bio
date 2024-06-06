@@ -1,17 +1,15 @@
+
 import useSpline from '@splinetool/r3f-spline'
 import { OrthographicCamera } from '@react-three/drei'
-import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
-
-export default function Spline({ ...props }) {
-  const { nodes, materials } = useSpline('https://my.spline.design/cubic-d687c66d1b8a2ce319751cb0eddb67cf/')
+export default function Scene({ ...props }) {
+  const { nodes, materials } = useSpline('https://prod.spline.design/GA3j2YFjuhBlSFmj/scene.splinecode')
   return (
     <>
-      <color attach="background" args={['#000000']} />
+      <color attach="background" args={['#fffff']} />
       <group {...props} dispose={null}>
         <scene name="Scene">
-          <group name="Cubes" rotation={[0.77, Math.PI / 4, 0]}>
+          <group name="Cubes" position={[4.68, -3.25, 3.36]} rotation={[0.77, Math.PI / 4, 0]}>
             <mesh
               name="Cube 2"
               geometry={nodes['Cube 2'].geometry}

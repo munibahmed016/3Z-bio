@@ -4,25 +4,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { CheckCheck, LucideIcon } from 'lucide-react';
 import infoCards from '../app/libs/infoCards';
+import BmiCalculator from '../app/libs/heroSection';
 // import pricingCards from '../app/libs/pricingCards';
-import calculateBMI from "./libs/heroSection";
 import { ReactElement } from "react";
+import Footer from "../app/libs/Footer";
+import Spline from '@splinetool/react-spline'
 
 const Home: React.FC = () => {
   const [weight, setWeight] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   const [bmi, setBMI] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const bmiResult = calculateBMI(weight, height);
-    setBMI(bmiResult);
-  };
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const bmiResult = calculateBMI(weight, height);
+  //   setBMI(bmiResult);
+  // };
 
   return (
     <main className="min-h-screen h-fit flex-col items-center justify-center relative">
       <Navbar />
-      <header id="home" className="flex flex-col-reverse md:flex-row w-full h-screen max-w-7xl items-center justify-center p-8 relative overflow-x-hidden">
+      <header className="flex flex-col-reverse md:flex-row w-full h-screen max-w-7xl items-center justify-center p-8 relative overflow-x-hidden">
         <div className="w-full h-2/4 md:h-full md:w-2/5 flex flex-col justify-center items-center md:items-start gap-8">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl font-black md:text-8xl">3Z-Bio</h1>
@@ -32,21 +34,21 @@ const Home: React.FC = () => {
             Insightful is an AI-powered sales optimization tool that provides data-driven insights to boosts sales performance.
           </p>
           <div className='w-full flex items-center justify-center md:justify-start gap-4'>
-            <button className='w-48 h-12 text-sm sm:text-base rounded bg-white text-black hover:bg-fuchsia-700 hover:text-white transition-colors'>
+            <button className='w-48 h-12 text-sm sm:text-base rounded bg-white text-black hover:bg-blue-500 hover:text-white transition-colors'>
               Visit our web-site
             </button>
-            <button className='w-48 h-12 text-sm sm:text-base rounded hover:bg-white hover:text-white hover:bg-opacity-5 transition-colors'>
+            <button className='w-48 h-12 text-sm sm:text-base rounded hover:bg-green-600 hover:text-white hover:bg-opacity-60 transition-colors'>
               Contact
             </button>
           </div>
         </div>
         {/* Uncomment the Spline section if you want to use it */}
-        {/* <div className='w-full h-2/4 md:h-full md:w-3/5 flex items-center justify-center relative -z-10'>
+        <div className='w-full h-2/4 md:h-full md:w-3/5 flex items-center justify-center relative -z-10'>
           <Spline className="w-full flex scale-[.25] sm:scale-[.35] lg:scale-[.5] items-center justify-center md:justify-start" scene='https://prod.spline.design/pvM5sSiYV2ivWraz/scene.splinecode'/>
-        </div> */}
+        </div>
       </header>
 
-      <section id="about" className="h-fit min-h-screen w-full flex relative items-center justify-center p-8">
+      <section id="about" className="h-fit min-h-screen w-full flex relative items-center justify-center p-8 ">
         <div className='absolute -z-10 h-full w-full overflow-hidden'>
           <Image src="/whirl.svg" fill className="absolute object-cover w-full overflow-visible sm:rotate-90" alt="Background Whirl" />
         </div>
@@ -71,20 +73,26 @@ const Home: React.FC = () => {
         </div>
       </section> */}
 
+      <section id="BMI Checker" className="bg-teal-50 h-fit min-h-screen w-full flex relative items-center justify-center p-8">
+        {/* <h4 className='text-4xl md:text-5xl font-bold'>BMI</h4> */}
+        <BmiCalculator />
+        {/* <Image src="/bg.png" fill className="absolute object-cover w-full overflow-visible sm:rotate-90" alt="Background Whirl" /> */}
+      </section>
+      <section id="contact" className="flex flex-col-reverse md:flex-row w-full h-screen max-w-7xl items-center justify-center p-5 relative overflow-x-hidden">
+        <div className="input bg-blue-500 rounded-3xl px-10 py-10">
+          <div className="flex justify-start items-start">
+        <h1 className="font-semibold text-white mb-2 text-3xl md:text-3xl px-2">Ready to get started?</h1></div>
+        <div className="flex">
+        <p className="flex font-semibold text-white px-2 mt-3">Unsure which product is best for you? We're happy to help!
+          Contact our health experts today!</p>
+          <div className=" ml-9"><button className="border rounded-md px-5 py-1 bg-white hover:bg-white text-blue-500">Contact</button></div>
+          </div>
+        </div>
+      </section>
       <section>
-        <h4>BMI</h4>
-        <div>{bmi !== null && <p>Your BMI is: {bmi.toFixed(2)}</p>}</div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="weight">Weight (kg):</label>
-            <input type="number" id="weight" name="weight" value={weight} onChange={(e) => setWeight(parseInt(e.target.value))} required />
-          </div>
-          <div>
-            <label htmlFor="height">Height (cm):</label>
-            <input type="number" id="height" name="height" value={height} onChange={(e) => setHeight(parseInt(e.target.value))} required />
-          </div>
-          <button type="submit">Calculate BMI</button>
-        </form>
+      <div className="">
+        <Footer/>
+        </div>
       </section>
     </main>
   );
@@ -110,49 +118,16 @@ function InfoCard({ title, Icon, children }: IInfoCardProps) {
   );
 }
 
-interface IPricingCardProps {
-  title: string;
-  price: number;
-  benefits: string[];
-  oneliner: string;
-}
-
-function PricingCard({ title, price, benefits, oneliner }: IPricingCardProps) {
-  return (
-    <div className='h-fit w-full rounded flex flex-col p-8 gap-8 bg-gray-900 rounded bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-20'>
-      <div className='flex flex-col gap-2'>
-        <div>
-          <h6 className='text-2xl'>{title}</h6>
-          <p className='text-sm text-zinc-500'>{oneliner}</p>
-        </div>
-        <p className='text-4xl font-bold'>
-          ${price} <span className='text-sm font-normal text-zinc-500'>/ Month</span>
-        </p>
-      </div>
-      <button className='bg-fuchsia-700 rounded p-2 text-sm transition-colors hover:bg-fuchsia-800'>Try 7 days free!</button>
-      <div className='flex flex-col w-full gap-4'>
-        {benefits.map((benefit, i) => (
-          <p key={i} className='text-sm text-zinc-500 flex items-center gap-2'>
-            <span>
-              <CheckCheck />
-            </span>
-            {benefit}
-          </p>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Navbar() {
   return (
-    <div className="w-full h-16 backdrop-filter backdrop-blur-xl bg-opacity-20 border-b flex items-center justify-center">
+    <div className="bg-gray-900 w-full h-20 backdrop-filter backdrop-blur-xl border-b flex items-center justify-center">
       <div className="max-w-7xl w-full flex items-center justify-between p-4">
-        <h6 className="font-bold">3Z-Bio</h6>
+        <img src="/3z_bio_logo.svg" alt="3z-bio" className="w-38 h-28" />
+        {/* <h6 className="font-bold">3Z-Bio</h6> */}
         <ul className="flex gap-8">
-          <li><Link className="hover:text-fuchsia-500 transition-colors text-xs sm:text-base" href={'#home'}>Home</Link></li>
-          <li><Link className="hover:text-fuchsia-500 transition-colors text-xs sm:text-base" href={'#about'}>About</Link></li>
-          <li><Link className="hover:text-fuchsia-500 transition-colors text-xs sm:text-base" href={'#contact'}>Contact</Link></li>
+          <li><Link className="hover:text-blue-500 text-white transition-colors text-xs sm:text-base" href={'#BMI Checker'}>BMI Checker</Link></li>
+          <li><Link className="hover:text-blue-500 text-white transition-colors text-xs sm:text-base" href={'#about'}>About</Link></li>
+          <li><Link className="hover:text-blue-500 text-white transition-colors text-xs sm:text-base" href={'#contact'}>Contact</Link></li>
         </ul>
       </div>
     </div>
